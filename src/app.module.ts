@@ -21,7 +21,7 @@ import { MuseumArtworkModule } from './museum-artwork/museum-artwork.module';
 
 @Module({
   imports: [MuseumModule, ExhibitionModule, ArtworkModule, SponsorModule, ImageModule, ArtistModule, MovementModule,
-    TypeOrmModule.forRoot({
+    TypeOrmModule.forRoot({ 
       type: 'postgres',
       host: 'localhost',
       port: 5432,

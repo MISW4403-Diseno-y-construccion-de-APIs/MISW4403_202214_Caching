@@ -1,5 +1,8 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-inferrable-types */
 /* eslint-disable prettier/prettier */
-import { Injectable } from '@nestjs/common';
+import { CACHE_MANAGER, Inject, Injectable } from '@nestjs/common';
+import { Cache } from 'cache-manager';
 import { InjectRepository } from '@nestjs/typeorm';
 import { BusinessError, BusinessLogicException } from '../shared/errors/business-errors';
 import { Repository } from 'typeorm';
@@ -7,13 +10,26 @@ import { MuseumEntity } from './museum.entity';
 
 @Injectable()
 export class MuseumService {
+
+    cacheKey: string = "artists";
+    
     constructor(
         @InjectRepository(MuseumEntity)
-        private readonly museumRepository: Repository<MuseumEntity>
+        private readonly museumRepository: Repository<MuseumEntity>,
+        @Inject(CACHE_MANAGER) 
+        private readonly cacheManager: Cache
     ){}
 
     async findAll(): Promise<MuseumEntity[]> {
-        return await this.museumRepository.find({ relations: ["artworks", "exhibitions"] });
+        const cached: MuseumEntity[] = await this.cacheManager.get<MuseumEntity[]>(this.cacheKey);
+        
+        if(!cached){
+            const museums: MuseumEntity[] = await this.museumRepository.find({ relations: ["artworks", "exhibitions"] });
+            await this.cacheManager.set(this.cacheKey, museums);
+            return museums;
+        }
+
+        return cached;
     }
 
     async findOne(id: string): Promise<MuseumEntity> {

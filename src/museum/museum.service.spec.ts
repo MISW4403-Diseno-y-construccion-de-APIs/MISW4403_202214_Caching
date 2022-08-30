@@ -7,15 +7,16 @@ import { MuseumEntity } from './museum.entity';
 import { MuseumService } from './museum.service';
 
 import { faker } from '@faker-js/faker';
+import { CacheModule } from '@nestjs/common';
 
-describe('MuseumService', () => {
+describe('MuseumService', () => { 
   let service: MuseumService;
   let repository: Repository<MuseumEntity>;
   let museumsList: MuseumEntity[];
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      imports: [...TypeOrmTestingConfig()],
+      imports: [...TypeOrmTestingConfig(), CacheModule.register()],
       providers: [MuseumService],
     }).compile();
 
