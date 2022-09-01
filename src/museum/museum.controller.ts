@@ -22,7 +22,6 @@ export class MuseumController {
   }
 
   @Post()
-  @HttpCode(201)
   async create(@Body() museumDto: MuseumDto) {
     const museum: MuseumEntity = plainToInstance(MuseumEntity, museumDto);
     return await this.museumService.create(museum);
