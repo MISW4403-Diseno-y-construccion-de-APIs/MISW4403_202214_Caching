@@ -12,7 +12,6 @@ export class MuseumArtworkController {
     constructor(private readonly museumArtworkService: MuseumArtworkService){}
 
     @Post(':museumId/artworks/:artworkId')
-    @HttpCode(201)
     async addArtworkMuseum(@Param('museumId') museumId: string, @Param('artworkId') artworkId: string){
         return await this.museumArtworkService.addArtworkMuseum(museumId, artworkId);
     }
