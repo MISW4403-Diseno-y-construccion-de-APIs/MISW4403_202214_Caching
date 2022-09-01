@@ -33,9 +33,7 @@ export class ArtworkService {
         if (!persistedArtwork)
           throw new BusinessLogicException("The artwork with the given id was not found", BusinessError.NOT_FOUND);
         
-        artwork.id = id;
-     
-        return await this.artworkRepository.save(artwork);
+        return await this.artworkRepository.save({...persistedArtwork, ...artwork});
     }
 
     async delete(id: string) {
