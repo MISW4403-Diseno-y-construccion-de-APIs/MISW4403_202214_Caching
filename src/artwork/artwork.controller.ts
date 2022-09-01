@@ -22,7 +22,6 @@ export class ArtworkController {
   }
 
   @Post()
-  @HttpCode(201)
   async create(@Body() artworkDto: ArtworkDto) {
     const artwork = plainToInstance(ArtworkEntity, artworkDto);
     return await this.artworkService.create(artwork);
