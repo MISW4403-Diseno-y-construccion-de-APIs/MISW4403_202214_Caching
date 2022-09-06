@@ -1,8 +1,6 @@
 /* eslint-disable prettier/prettier */
 import {IsNotEmpty, IsString, IsUrl} from 'class-validator';
 export class MuseumDto {
-  readonly id: string;
-  
   @IsString()
   @IsNotEmpty()
   readonly name: string;
