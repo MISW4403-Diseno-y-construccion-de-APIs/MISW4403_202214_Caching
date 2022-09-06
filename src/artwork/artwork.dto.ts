@@ -2,8 +2,6 @@
 import { IsNotEmpty, IsNumber, IsString, IsUrl } from "class-validator";
 
 export class ArtworkDto {
-    readonly id: string;
-
     @IsString()
     @IsNotEmpty()
     readonly name: string;
